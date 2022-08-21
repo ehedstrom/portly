@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Portly
 # A python port scanner.
 # Eric Hedstrom
