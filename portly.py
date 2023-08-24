@@ -16,7 +16,7 @@ except ImportError as error:
     print(error)
 
 # Local variables
-wait = float(0.5)             # Seconds to wait for a response.
+wait = float(0.5)    # Seconds to wait for a response.
 low_port = 1         # Low port range.
 high_port = 65535    # High port range.
 multi_port = False   # Toggle between single and multiple ports.
@@ -37,7 +37,7 @@ if sys.argv[1].count("-") > 0:
 
     # Verify low value is a viable port.
     if not 1 <= low_port <= 65535:
-        print(f"{port} is not between 1 and 65535.")
+        print(f"{low_port} is not between 1 and 65535.")
         sys.exit()
 
     # Verify the high value is a viable port.
