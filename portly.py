@@ -78,10 +78,11 @@ scan_total = 0
 
 def scan_ports(ip, low_port, high_port, wait):
 
-    scan_total = 0
+    scan_total = 0    # track how many ports have been scanned
 
     print(f"Scan started - scanning ports {low_port}-{high_port}")
 
+    # Loop through the request ports. Open a new socket stream over IPv4
     for port in range(low_port, high_port + 1):
         protocol = "TCP"
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -94,7 +95,7 @@ def scan_ports(ip, low_port, high_port, wait):
         else:
             status = "CLOSED"
 
-        s.close()
+        s.close()    # Close the socket. We're don't want to DOS the target
         scan_total += 1
 
     print(f"SCAN COMPLETE: {scan_total} of {high_port - low_port + 1}")
