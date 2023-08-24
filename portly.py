@@ -23,7 +23,7 @@ multi_port = False   # Toggle between single and multiple ports.
 
 # Exit if port and IP are not passed via arg
 if not len(sys.argv) == 3:
-    print(f"Usage: main.py [PORT] [IP]")
+    print(f"Usage: portly.py [PORT] [IP]")
     sys.exit()
 
 # Use port passed via argument.
@@ -75,13 +75,14 @@ else:
 # Total Ports Scanned
 scan_total = 0
 
-# main loop
-if multi_port:
-    # Scan multiple ports
-    print(f"Scan started - minimum run time:{min_run_time}s")
 
-    port = low_port
-    while port <= high_port:
+def scan_ports(ip, low_port, high_port, wait):
+
+    scan_total = 0
+
+    print(f"Scan started - scanning ports {low_port}-{high_port}")
+
+    for port in range(low_port, high_port + 1):
         protocol = "TCP"
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(wait)
@@ -93,34 +94,13 @@ if multi_port:
         else:
             status = "CLOSED"
 
-        # Display results back to the terminal.
-        # print(f"Port:{protocol} {port}-{status}")
         s.close()
-        port += 1
         scan_total += 1
 
-else:
-    # Scan a single port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    result = s.connect_ex((ip, port))
-
-    # Currently we're only scanning TCP ports.
-    protocol = "TCP"
-
-    # Convert result to Open/Closed.
-    if result == 0:
-        status = "OPEN"
-    else:
-        status = "CLOSED"
-
-    # Display results back to the terminal.
-    print(f"Port:{protocol} {port}-{status}")
-    s.close()
-    scan_total += 1
-
-# Close s
-print(f"SCAN COMPLETE: {scan_total} of {possible_ports}")
+    print(f"SCAN COMPLETE: {scan_total} of {high_port - low_port + 1}")
 
 
+wait_time = 0.5
 
+scan_ports(ip, low_port, high_port, wait_time)
 
